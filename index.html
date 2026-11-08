@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Portofolio muhammad alfatih  - Mahasiswa Pendidikan IT, UI/UX & Desain Web"
+      content="Portofolio Eka Wahyu Maulidan - Mahasiswa Pendidikan IT, UI/UX & Desain Web"
     />
     <title>Muhammad alfatih - Portofolio Pribadi</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -502,6 +502,14 @@
               pelajaran
             </p>
           </div>
+          
+          <div
+            onclick="switchPortfolioTab('projects')"
+           class="glass-card p-5 rounded-2xl text-center cursor-pointer hover:border-emerald-500/50 transition-all hover:-translate-y-1"
+>  
+       <span id="project-count" class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">5</span>
+         <p class="text-xs font-semibold text-gray-400 mt-1 uppercase tracking-wider">Project</p>
+      </div>
         </div>
       </section>
 
@@ -512,7 +520,7 @@
           <p
             class="text-xs uppercase tracking-widest text-blue-400 font-semibold"
           >
-            pap random & pelajaran
+            pap random ,pelajaran & project
           </p>
         </div>
 
@@ -534,6 +542,13 @@
           >
             pelajaran
           </button>
+          <button
+  onclick="switchPortfolioTab('projects')"
+  id="tab-projects"
+  class="port-tab px-5 py-2 rounded-xl text-xs font-bold text-gray-400 hover:text-white glass-card transition-all"
+>
+  Project
+</button>
         </div>
 
         <!-- Tab 1: FOTO SAYA (diisi otomatis dari daftar di bagian JavaScript) -->
@@ -585,6 +600,9 @@
             </div>
           </div>
         </div>
+        <!-- Tab 3: PROJECT -->
+<div id="content-projects" class="tab-content hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
       </section>
 
       <!-- KONTAK -->
@@ -651,10 +669,10 @@
          Taruh foto di folder "foto" (sebelah index.html).
          Tambah/hapus baris di bawah sesuai jumlah fotomu. */
       const photos = [
-        { src: "foto3.jpg.jpeg", caption: "liw kiw" },
-        { src: "foto2.jpg.jpeg", caption: "wowok" },
+        { src: "foto3.jpg.jpeg", caption: "kiw kiw" },
+        { src: "foto7.jpg.jpeg", caption: "testing" },
         { src: "foto5.jpg.JPG", caption: "mini soccer" },
-        { src: "fotobersama.jpg.jpeg", caption: "Kegiatan foto" },
+        { src: "fotobersama.jpg.jpeg", caption: "Kegiatan" },
         { src: "foto8.jpg.jpeg", caption: "formal" },
         { src: "poto4.jpeg", caption: "my friend" },
       ];
@@ -812,7 +830,116 @@
 
       // Komentar (aman dari XSS)
       
+   // Daftar project (satu baris = satu project)
+const projects = [
+  {
+    title: "ujian figma ",
+    desc: "Desain UI/UX ujian Figma.",
+    img: "figma.jpg.png",
+    tags: ["Figma", "UI/UX"],
+    demo: "",
+    repo: "",
+  },
+  {
+    title: "program Mobile Flutter",
+    desc: "program  Flutter awal",
+    img: "flutter.jpg.png",
+    tags: ["Flutter", "Dart"],
+    demo: "",
+    repo: "",
+  },
+  {
+    title: " Stored Procedure  db_toko di maria db ",
+    desc: "Stored Procedure db_toko",
+    img: "mariadb.jpg.png",
+    tags: [ "MySQL", "XAMPP", "Maria DB"],
+    demo: "",
+    repo: "",
+  },
+  {
+    title: "syntack void main ujian dart lanjut",
+    desc: " syntack di void main proses ujian dart lanjut ",
+    img: "intelij.jpg.png",
+    tags: ["Intelij IDEA", "Dart"],
+    demo: "",
+    repo: "",
+  },
+  {
+    title: "Website Portofolio Pribadi",
+    desc: "Website portofolio ini, dibuat dengan HTML, CSS, dan JavaScript.",
+    img: "porto.jpg.png",
+    tags: ["HTML", "css", "JavaScript"],
+    demo: "",
+    repo: "",
+  },
+];
 
+// Tampilkan kartu project
+(function () {
+  const wrap = document.getElementById("content-projects");
+  const makeLink = (href, label, icon, primary) => {
+    const a = document.createElement("a");
+    a.href = href;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.className =
+      "px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all " +
+      (primary
+        ? "bg-blue-600 hover:bg-blue-500 text-white"
+        : "bg-slate-800 hover:bg-slate-700 text-gray-300");
+    a.innerHTML = '<i class="' + icon + ' mr-1"></i>' + label;
+    return a;
+  };
+
+  projects.forEach((p) => {
+    const card = document.createElement("div");
+    card.className =
+      "glass-card rounded-2xl overflow-hidden group hover:border-blue-500/50 transition-all duration-300 flex flex-col";
+
+    const imgBox = document.createElement("div");
+    imgBox.className =
+      "relative h-44 overflow-hidden bg-slate-900 flex items-center justify-center";
+    const ph = document.createElement("i");
+    ph.className = "fa-regular fa-image text-3xl text-gray-600";
+    const img = document.createElement("img");
+    img.src = p.img;
+    img.alt = p.title;
+    img.loading = "lazy";
+    img.className =
+      "absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500";
+    img.onerror = () => img.remove();
+    imgBox.append(ph, img);
+
+    const body = document.createElement("div");
+    body.className = "p-5 space-y-3 flex-1 flex flex-col";
+    const h = document.createElement("h3");
+    h.className = "font-bold text-base text-white";
+    h.textContent = p.title;
+    const d = document.createElement("p");
+    d.className = "text-xs text-gray-400";
+    d.textContent = p.desc;
+    const tagBox = document.createElement("div");
+    tagBox.className = "flex flex-wrap gap-1.5";
+    p.tags.forEach((t) => {
+      const s = document.createElement("span");
+      s.className = "text-[10px] bg-blue-950 text-blue-400 px-2 py-0.5 rounded";
+      s.textContent = t;
+      tagBox.appendChild(s);
+    });
+    body.append(h, d, tagBox);
+
+    if (p.demo || p.repo) {
+      const links = document.createElement("div");
+      links.className = "flex gap-2 pt-1 mt-auto";
+      if (p.demo) links.appendChild(makeLink(p.demo, "Lihat", "fa-solid fa-arrow-up-right-from-square", true));
+      if (p.repo) links.appendChild(makeLink(p.repo, "Kode", "fa-brands fa-github", false));
+      body.appendChild(links);
+    }
+
+    card.append(imgBox, body);
+    wrap.appendChild(card);
+  });
+})();
       // Form kontak
       document
         .getElementById("contact-form")
